@@ -471,7 +471,7 @@ typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSStr
                                        sinaWeibo.accessToken,@"access_token",imageData,@"pic", nil];
     }
     
-    [sinaWeibo requestWithURL:@"statuses/upload.json"
+    [sinaWeibo requestWithURL:@"statuses/share.json"
                        params:params
                    httpMethod:@"POST" delegate:self];
     
