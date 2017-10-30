@@ -3,7 +3,7 @@
 //  Slate
 //
 //  Created by lin yize on 16-6-3.
-//  Copyright (c) 2016年 islate. All rights reserved.
+//  Copyright (c) 2016年 modernmedia. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -54,7 +54,7 @@
  *  @block param    weiboNickname       微博昵称
  *  @block param    weiboAvatarUrl      微博头像网址
  */
-- (void)weiboProfile:(void (^)(BOOL success, NSString *weiboUid, NSString *weiboNickname, NSString *weiboAvatarUrl, NSString *userAddingInfo))profileBlock;
+- (void)weiboProfile:(void (^)(BOOL success, NSString *weiboUid, NSString *accessToken, NSString *weiboNickname, NSString *weiboAvatarUrl, NSString *userAddingInfo))profileBlock;
 
 // sso相关方法
 - (void)applicationDidBecomeActive;

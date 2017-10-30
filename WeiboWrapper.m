@@ -3,7 +3,7 @@
 //  Slate
 //
 //  Created by lin yize on 16-6-3.
-//  Copyright (c) 2016年 islate. All rights reserved.
+//  Copyright (c) 2016年 modernmedia. All rights reserved.
 //
 
 #import "WeiboWrapper.h"
@@ -35,7 +35,7 @@ typedef enum : NSUInteger {
 typedef void (^WeiboWrapperFollowBlock)(BOOL success);
 typedef void (^WeiboWrapperShareBlock)(BOOL success);
 typedef void (^WeiboWrapperLoginBlock)(BOOL isLogin);
-typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSString *weiboNickname, NSString *weiboAvatarUrl, NSString *userAddingInfo);
+typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSString *accessToken, NSString *weiboNickname, NSString *weiboAvatarUrl, NSString *userAddingInfo);
 
 @interface WeiboWrapper () <SinaWeiboDelegate, SinaWeiboRequestDelegate, DETweetComposeViewControllerDelegate>
 
@@ -481,7 +481,7 @@ typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSStr
 
 #pragma mark - 获取微博信息
 
-- (void)weiboProfile:(void (^)(BOOL success, NSString *weiboUid, NSString *weiboNickname, NSString *weiboAvatarUrl, NSString *userAddingInfo))block
+- (void)weiboProfile:(void (^)(BOOL success, NSString *weiboUid, NSString *accessToken, NSString *weiboNickname, NSString *weiboAvatarUrl, NSString *userAddingInfo))block
 {
     if (!block) {
         return;
@@ -590,7 +590,7 @@ typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSStr
                     
                     if (profileBlock)
                     {
-                        profileBlock(YES, weiboUid, weiboNickname, weiboAvatar,userAddingInfo);
+                        profileBlock(YES, weiboUid, account.credential.oauthToken, weiboNickname, weiboAvatar,userAddingInfo);
                         profileBlock = nil;
                     }
                 }
@@ -757,13 +757,13 @@ typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSStr
         
         NSString *weiboUid = [result objectForKey:@"idstr"];
         NSString *weiboNickname = [result objectForKey:@"screen_name"];
-        NSString *weiboAvatar = [result objectForKey:@"profile_image_url"];
+        NSString *weiboAvatar = [result objectForKey:@"avatar_large"];
         
         NSString *useraddingInfo = [NSString stringWithFormat:@"%@",result];
         
         if (profileBlock)
         {
-            profileBlock(YES, weiboUid, weiboNickname, weiboAvatar,useraddingInfo);
+            profileBlock(YES, weiboUid, sinaWeibo.accessToken, weiboNickname, weiboAvatar, useraddingInfo);
             profileBlock = nil;
         }
         
@@ -794,7 +794,7 @@ typedef void (^WeiboWrapperProfileBlock)(BOOL success, NSString *weiboUid, NSStr
     {
         if (profileBlock)
         {
-            profileBlock(NO,nil,nil,nil,nil);
+            profileBlock(NO,nil,nil,nil,nil,nil);
             loginBlock = nil;
         }
     }
